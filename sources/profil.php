@@ -4,14 +4,49 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+session_start();
+require './dao.php';
+require './phptohtml.php';
+$utilisateur = recupererUtilisateur($_SESSION["id"]);
+$adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
+$especes = recupererRaces();
+$animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
+?>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <link href="startbootstrap-freelancer-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="startbootstrap-freelancer-gh-pages/css/freelancer.min.css" rel="stylesheet" type="text/css">
+        <link href="startbootstrap-freelancer-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <title>Profil</title>
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+
+        <nav class="navbar navbar-default navbar-custom" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="index.php">Accueil</a></li>
+                        <li><a href='deconnexion.php'>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+
+            <div class="intro-text col-lg-12 text-center">
+                <h1 class="name">Profil</h1>
+            </div>
+            <div class="col-lg-10 col-lg-offset-2">
+                <h2>Informations personnels</h2>
+                <?php afficherUtilisateur($utilisateur) ?>
+                <h2>Mes animaux</h2>
+                <?php afficherAnimaux($animaux, $especes) ?>
+                <h2>Adresse</h2>
+                <?php afficherAdresse($adresse) ?>
+            </div>
+        </div>
     </body>
 </html>
