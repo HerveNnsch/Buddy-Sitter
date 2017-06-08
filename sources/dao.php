@@ -119,6 +119,17 @@ function recupererAnimauxDepuisUtilisateur($idUtilisateur) {
     }
 }
 
+function recupererAnimal($idAnimal) {
+    try {
+        $pssAnimal = maConnexion()->prepare("SELECT * FROM animaux WHERE idAnimal = :id");
+        $pssAnimal->bindParam(':id', $idAnimal, PDO::PARAM_INT);
+        $pssAnimal->execute();
+        return $pssAnimal->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die('Erreur pendant la récupération de l\'animal');
+    }
+}
+
 function recupererAdresse($idAdresse) {
     try {
         $pssUtilisateur = maConnexion()->prepare("SELECT * FROM adresses WHERE idAdresse = :id");
@@ -130,7 +141,7 @@ function recupererAdresse($idAdresse) {
     }
 }
 
-function recupererDisponibilites(){
+function recupererHoraires(){
     try {
         $pssAnimal = maConnexion()->prepare("SELECT * FROM horaires;");
         $pssAnimal->execute();
@@ -140,7 +151,7 @@ function recupererDisponibilites(){
     }
 }
 
-function insererDisponibilités($idHoraire, $idUtilisateur) {
+function insererDisponibilites($idHoraire, $idUtilisateur) {
     try {
         $psiDisponibilites = maConnexion()->prepare("INSERT INTO disponible(idHoraire,idUtilisateur) VALUES(:idHoraire, :idUtilisateur)");
         $psiDisponibilites->bindParam(':idHoraire', $idHoraire, PDO::PARAM_INT);
@@ -161,6 +172,7 @@ function deleteDisponibilites($idUtilisateur) {
 }
 
 function insererChoixRace($idEspece, $idUtilisateur) {
+    $delete=  maConnexion()->query("DELETE FROM peut_garder WHERE idUtilisateur = ".$idUtilisateur);
     try {
         $psiDisponibilites = maConnexion()->prepare("INSERT INTO peut_garder(idEspece,idUtilisateur) VALUES(:idEspece, :idUtilisateur)");
         $psiDisponibilites->bindParam(':idEspece', $idEspece);
@@ -181,5 +193,44 @@ function recupererDisponibilités($id){
     } catch (PDOException $e) {
         die('Erreur pendant la récupération des disponibilités');
     }
-    
+}
+
+function modifierAdresse($numero, $rue, $npa, $pays, $lat, $lng, $id) {
+    $psuAdresse = maConnexion()->prepare("UPDATE adresses "
+            . "SET Numero=:numero, NomRue=:rue, CodePostal=:npa, Pays=:pays, Lat=:lat, Lng=:lng "
+            . "WHERE idAdresse = :id");
+    $psuAdresse->bindParam(":numero", $numero);
+    $psuAdresse->bindParam(":rue", $rue);
+    $psuAdresse->bindParam(":npa", $npa);
+    $psuAdresse->bindParam(":pays", $pays);
+    $psuAdresse->bindParam(":lat", $lat);
+    $psuAdresse->bindParam(":lng", $lng);
+    $psuAdresse->bindParam(":id", $id);
+    $psuAdresse->execute();
+}
+
+function modifierUtilisateur($nom, $prenom, $mdp, $naissance, $description, $idUtlisateur, $email) {
+    $psuUtilisateur = maConnexion()->prepare("UPDATE utilisateurs "
+            . "SET Nom=:nom, Prenom=:prenom, Mdp=:mdp, DateNaissance=:naissance, Description=:description, Email=:email "
+            . "WHERE idUtilisateur = :id");
+    $psuUtilisateur->bindParam(':nom', $nom);
+    $psuUtilisateur->bindParam(':prenom', $prenom);
+    $psuUtilisateur->bindParam(':mdp', $mdp);
+    $psuUtilisateur->bindParam(':naissance', $naissance);
+    $psuUtilisateur->bindParam(':description', $description);
+    $psuUtilisateur->bindParam(':id', $idUtlisateur);
+    $psuUtilisateur->bindParam(':email', $email);
+    $psuUtilisateur->execute();
+}
+
+function modifierAnimal($nom, $naissance, $remarque, $espece,$idAnimal) {
+    $psuUtilisateur = maConnexion()->prepare("UPDATE animaux "
+            . "SET NomAnimal=:nom, DateNaissanceAnimal=:naissance, Remarques=:remarques, idEspece=:espece "
+            . "WHERE idAnimal = :id");
+    $psuUtilisateur->bindParam(':nom', $nom);
+    $psuUtilisateur->bindParam(':naissance', $naissance);
+    $psuUtilisateur->bindParam(':remarques', $remarque);
+    $psuUtilisateur->bindParam(':espece', $espece);
+    $psuUtilisateur->bindParam(':id', $idAnimal);
+    $psuUtilisateur->execute();
 }

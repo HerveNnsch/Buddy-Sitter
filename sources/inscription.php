@@ -52,8 +52,6 @@ if (isset($_REQUEST["btnsave"])) {
                 <form action="inscription.php" method="POST">
                     <fieldset>
                         <legend>Informations d'identité</legend>
-
-
                         <div class="row">
                             <div class="col-lg-2"><label>Nom :</label></div>
                             <div class="col-lg-10"><input type="text" name="nom" required="" value="<?php if (isset($_REQUEST['nom'])) echo $_REQUEST['nom']; ?>"></div>
@@ -80,7 +78,7 @@ if (isset($_REQUEST["btnsave"])) {
                         </div>
                         <div class="row">
                             <div class="col-lg-2"><label>Decrivez-vous :</label></div>
-                            <div class="col-lg-10"><textarea  name="desc" rows="5" cols="50" value="<?php isset($_REQUEST["desc"]) ? $_REQUEST["desc"] : ""; ?>"></textarea></div>
+                            <div class="col-lg-10"><textarea  name="desc" rows="5" cols="50"><?php isset($_REQUEST["desc"]) ? $_REQUEST["desc"] : ""; ?></textarea></div>
                         </div>
                     </fieldset>
 

@@ -5,16 +5,13 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-session_start();
 require './dao.php';
+$animal = recupererAnimal($_GET["id"]);
 $lesraces = recupererRaces();
-if (isset($_REQUEST["btnsave"])) {
-    $animal = inscriptionAnimal($_REQUEST["races"], $_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_SESSION["id"]);
-    if (count($animal) > 0) {
-        header('Location:profil.php');
-    } else {
-        echo "problème pendant l'insertion";
-    }
+
+if(isset($_REQUEST["btnsave"])){
+    modifierAnimal($_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_REQUEST["race"], $_GET["id"]);
+    header('Location:profil.php');
 }
 ?>
 <html>
@@ -23,7 +20,7 @@ if (isset($_REQUEST["btnsave"])) {
         <link href="startbootstrap-freelancer-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="startbootstrap-freelancer-gh-pages/css/freelancer.min.css" rel="stylesheet" type="text/css">
         <link href="startbootstrap-freelancer-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <title>Ajouter un animal</title>
+        <title>Modifier <?= $animal[0]["NomAnimal"] ?></title>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
@@ -32,7 +29,7 @@ if (isset($_REQUEST["btnsave"])) {
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
-                        <li><a href="profil.php">Profil</a></li>
+                        <li><a href='profil.php'>Profil</a></li>
                         <li><a href="deconnexion.php">Déconnexion</a></li>
                     </ul>
                 </div>
@@ -40,33 +37,37 @@ if (isset($_REQUEST["btnsave"])) {
         </nav>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-2">
-                <form action="ajoutanimal.php" method="POST">
+                <form action="modifieranimal.php?id=<?= $_GET["id"] ?>" method="POST">
                     <fieldset>
-                        <legend>Ajout d'un animal</legend>
+                        <legend>Modification d'informations</legend>
                         <div class='row'>
                             <div class="col-lg-2"><label>Espèce :</label></div>
-                            <div class="col-lg-10"><select name="races">
+                            <div class="col-lg-10"><select name="race">
                                     <?php
                                     foreach ($lesraces as $race) {
-                                        echo "<option value=" . $race["idEspece"] . ">" . $race["NomEspece"] . "</option>";
+                                        $selected="";
+                                        if($race["idEspece"]==$animal[0]["idEspece"]){
+                                            $selected="selected";
+                                        }
+                                        echo "<option value=" . $race["idEspece"] . " ".$selected.">" . $race["NomEspece"] . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2"><label>Date de naissance :</label></div>
-                            <div class="col-lg-10"><input type="date" name="date" required=""></div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-2"><label>Nom :</label></div>
-                            <div class="col-lg-10"><input type="text" name="nom" required=""></div>
+                            <div class="col-lg-10"><input type="text" name="nom" required="" value="<?= $animal[0]["NomAnimal"] ?>"></div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2"><label>Remaques :</label></div>
-                            <div class="col-lg-10"><input type="text" name="remarques" required=""></div>
+                            <div class="col-lg-2"><label>Date de naissance :</label></div>
+                            <div class="col-lg-10"><input type="date" name="date" required="" value="<?= $animal[0]["DateNaissanceAnimal"] ?>"></div>
                         </div>
-                        <input class="btn btn-success btn-lg" type="submit" value="Ajouter" name="btnsave" >
+                        <div class="row">
+                            <div class="col-lg-2"><label>Remarques :</label></div>
+                            <div class="col-lg-10"><textarea  name="remarques" rows="5" cols="50"><?= $animal[0]["Remarques"] ?></textarea></div>
+                        </div>
+                        <input class="btn btn-success btn-lg" type="submit" value="Enregistrer les modifications" name="btnsave" >
                     </fieldset>
                 </form>
             </div>

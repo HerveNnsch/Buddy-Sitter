@@ -9,6 +9,7 @@ session_start();
 require './dao.php';
 require './phptohtml.php';
 $races = recupererRaces();
+$horaires=  recupererHoraires();
 
 if (!isset($_SESSION["id"])) {
     header('Location: index.php');
@@ -17,11 +18,12 @@ if (!isset($_SESSION["id"])) {
 if (isset($_REQUEST["btnsave"])) {
     deleteDisponibilites($_SESSION["id"]);
     foreach ($_POST["disponible"] as $dispo) {
-        insererDisponibilités($dispo, $_SESSION["id"]);
+        insererDisponibilites($dispo, $_SESSION["id"]);
     }
     foreach ($_POST["espece"] as $espece) {
         insererChoixRace($espece, $_SESSION["id"]);
     }
+    header('Location: profil.php');
 }
 ?>
 <html>
@@ -55,7 +57,8 @@ if (isset($_REQUEST["btnsave"])) {
                     <fieldset>
                         <legend>Ajouter des disponibilités</legend>
                         <?php
-                        afficherTableauDisponibilités();
+                        //afficherTableauDisponibilités();
+                        afficherDisponibilitesDeux([], $horaires,true);
                         afficherEspeces($races);
                         ?>
                     </fieldset>

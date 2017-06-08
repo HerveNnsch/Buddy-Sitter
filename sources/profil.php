@@ -47,7 +47,10 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
                 <br/>
                 <h2>Mes animaux</h2>
                 <?php afficherAnimaux($animaux, $especes) ?>
-                <?php afficherDisponibilites($disponibilites);?>
+                <?php
+                //afficherDisponibilites($disponibilites);
+                afficherDisponibilitesDeux($disponibilites, recupererHoraires(),false);
+                ?>
             </div>
         </div>
     </body>
