@@ -21,13 +21,14 @@ session_start();
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="inscription.php">Inscription</a></li>
+                        
                         <?php
                         if (isset($_SESSION["id"])) {
                             echo "<li><a href='profil.php'>Profil</a></li>";
                             echo "<li><a href='deconnexion.php'>Déconnexion</a></li>";
                         }else{
                             echo "<li><a href='connexion.php'>Connexion</a></li>";
+                            echo "<li><a href='inscription.php'>Inscription</a></li>";
                         }
                         ?>
                     </ul>

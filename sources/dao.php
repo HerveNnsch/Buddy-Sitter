@@ -129,3 +129,57 @@ function recupererAdresse($idAdresse) {
         die('Erreur pendant la récupération de l\'adresse');
     }
 }
+
+function recupererDisponibilites(){
+    try {
+        $pssAnimal = maConnexion()->prepare("SELECT * FROM horaires;");
+        $pssAnimal->execute();
+        return $pssAnimal->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die('Erreur pendant la récupération des horaires');
+    }
+}
+
+function insererDisponibilités($idHoraire, $idUtilisateur) {
+    try {
+        $psiDisponibilites = maConnexion()->prepare("INSERT INTO disponible(idHoraire,idUtilisateur) VALUES(:idHoraire, :idUtilisateur)");
+        $psiDisponibilites->bindParam(':idHoraire', $idHoraire, PDO::PARAM_INT);
+        $psiDisponibilites->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+        $psiDisponibilites->execute();
+        return maConnexion()->lastInsertId();
+    } catch (PDOException $e) {
+        die('Erreur pendant l\'enregistrement des disponibilités');
+    }
+}
+
+function deleteDisponibilites($idUtilisateur) {
+    $test = maConnexion()->query("SELECT * FROM disponible WHERE idUtilisateur = " . $idUtilisateur);
+    $test->fetchAll(PDO::FETCH_ASSOC);
+    if (count($test) != 0) {
+        $delete = maConnexion()->query("DELETE FROM disponible WHERE idUtilisateur = " . $idUtilisateur);
+    }
+}
+
+function insererChoixRace($idEspece, $idUtilisateur) {
+    try {
+        $psiDisponibilites = maConnexion()->prepare("INSERT INTO peut_garder(idEspece,idUtilisateur) VALUES(:idEspece, :idUtilisateur)");
+        $psiDisponibilites->bindParam(':idEspece', $idEspece);
+        $psiDisponibilites->bindParam(':idUtilisateur', $idUtilisateur);
+        $psiDisponibilites->execute();
+        return maConnexion()->lastInsertId();
+    } catch (PDOException $e) {
+        die('Erreur pendant l\'inscription des races gardables');
+    }
+}
+
+function recupererDisponibilités($id){
+    try {
+        $pssUtilisateur = maConnexion()->prepare("SELECT idHoraire FROM disponible WHERE idUtilisateur = :id");
+        $pssUtilisateur->bindParam(':id', $id, PDO::PARAM_INT);
+        $pssUtilisateur->execute();
+        return $pssUtilisateur->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die('Erreur pendant la récupération des disponibilités');
+    }
+    
+}

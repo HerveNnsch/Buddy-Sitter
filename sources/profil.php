@@ -12,6 +12,7 @@ $utilisateur = recupererUtilisateur($_SESSION["id"]);
 $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
 $especes = recupererRaces();
 $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
+$disponibilites = recupererDisponibilités($_SESSION["id"]);
 ?>
 <html>
     <head>
@@ -22,30 +23,31 @@ $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
         <title>Profil</title>
     </head>
     <body>
-
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
+                        <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                        <li><a href='disponibilites.php'>Disponibilités</a></li>
                         <li><a href='deconnexion.php'>Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="row">
-
             <div class="intro-text col-lg-12 text-center">
                 <h1 class="name">Profil</h1>
             </div>
             <div class="col-lg-10 col-lg-offset-2">
                 <h2>Informations personnels</h2>
                 <?php afficherUtilisateur($utilisateur) ?>
+                <?php afficherAdresse($adresse) ?>
+                <br/>
                 <h2>Mes animaux</h2>
                 <?php afficherAnimaux($animaux, $especes) ?>
-                <h2>Adresse</h2>
-                <?php afficherAdresse($adresse) ?>
+                <?php afficherDisponibilites($disponibilites);?>
             </div>
         </div>
     </body>
