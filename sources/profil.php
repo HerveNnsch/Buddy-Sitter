@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: Affiche le profil d'un utilisateur
 -->
 <?php
 session_start();
@@ -48,9 +47,9 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
                 <h2>Mes animaux</h2>
                 <?php afficherAnimaux($animaux, $especes) ?>
                 <?php
-                //afficherDisponibilites($disponibilites);
-                afficherDisponibilitesDeux($disponibilites, recupererHoraires(),false);
+                afficherDisponibilites($disponibilites, recupererHoraires(),false);
                 ?>
+                <a href="disponibilites.php">Modifier</a>
             </div>
         </div>
     </body>

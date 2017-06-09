@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: permet d'ajouter un animal
 -->
 <?php
 session_start();
@@ -46,7 +45,7 @@ if (isset($_REQUEST["btnsave"])) {
                         <div class='row'>
                             <div class="col-lg-2"><label>Espèce :</label></div>
                             <div class="col-lg-10"><select name="races">
-                                    <?php
+                                    <?php//affiche la liste à choix pour les races
                                     foreach ($lesraces as $race) {
                                         echo "<option value=" . $race["idEspece"] . ">" . $race["NomEspece"] . "</option>";
                                     }

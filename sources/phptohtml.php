@@ -1,10 +1,13 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Auteur: Hervé Neuenschwander
+ * But: regroupe des fonctions pour afficher des informations en html depuis du PHP
  */
 
+/**
+ * Affiche les infos d'un utilisateur
+ * @param array $infos informations de l'utilisateur
+ */
 function afficherUtilisateur($infos) {
     ?>
     <fieldset style="width: 40%; float: left;">
@@ -14,11 +17,15 @@ function afficherUtilisateur($infos) {
         <label>Date de naissance: <?= $infos[0]["DateNaissance"] ?></label><br/>
         <label>Email: <?= $infos[0]["Email"] ?></label><br/>
         <label>Description: <?= $infos[0]["Description"] ?></label><br/>
-        <a href='modifierinformations.php?id=<?= $infos[0]["idUtilisateur"]?>'>Modifier</a>
+        <a href='modifierinformations.php'>Modifier</a>
     </fieldset>
     <?php
 }
 
+/**
+ * Affiche l'adresse d'un utilisateur
+ * @param array $infos informations de l'adresse
+ */
 function afficherAdresse($infos) {
     ?>
     <fieldset style="width: 40%; float: rigth;">
@@ -32,6 +39,11 @@ function afficherAdresse($infos) {
     <?php
 }
 
+/**
+ * Affiche les animaux d'un utilisateur
+ * @param array $infos informations des aniamux
+ * @param array $especes informations des éspèces
+ */
 function afficherAnimaux($infos, $especes) {
     ?>
     <table class="table-responsive table-bordered" style="width: 70%;">
@@ -57,11 +69,19 @@ function afficherAnimaux($infos, $especes) {
     <?php
 }
 
-function afficherEspeces($infos) {
+/**
+ * affiche toutes les espèces
+ * @param array $infos informations des espèces
+ */
+function afficherEspeces($infos , $especes) {
+    $gardable=[];
+    foreach ($especes as $id) {
+        $gardable[]=$id["idEspece"];
+    }   
     ?>
     <label>Espèces:</label><br/>
     <?php foreach ($infos as $animal) : ?>
-        <input type='checkbox' name='espece[]' value='<?= $animal["idEspece"] ?>'><?= $animal["NomEspece"] ?><br/>
+    <input type='checkbox' name='espece[]' value='<?= $animal["idEspece"] ?>'<?php if(in_array($animal["idEspece"], $gardable)){echo "checked";}?>><?= $animal["NomEspece"] ?><br/>
     <?php
     endforeach;
 }
@@ -177,11 +197,17 @@ function afficherEspeces($infos) {
         <?php
 }*/
 
-function afficherDisponibilitesDeux($disponible,$horaires,$modif){
+/**
+ * Affiche le tableau des disponibilités
+ * @param array $disponible les disponibilités d'un utilisateur, vide si c'est la première fois
+ * @param array $horaires toutes les horaires
+ * @param bool $modif les chekbox sont elles activée
+ */
+function afficherDisponibilites($disponible,$horaires,$modif){
     $idHoraire=[];
     foreach ($disponible as $id) {
         $idHoraire[]=$id["idHoraire"];
-    }?>
+    }    ?>
         <table border='1'>
             <tr>
                 <td>Lundi</td>

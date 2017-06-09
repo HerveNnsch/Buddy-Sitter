@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: Permet de modifier l'adresse d'un utilisateur
 -->
 <?php
 require './dao.php';

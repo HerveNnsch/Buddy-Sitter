@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: permet à un utilisateur d'insérer ses disponibilités
 -->
 <?php
 session_start();
@@ -10,6 +9,8 @@ require './dao.php';
 require './phptohtml.php';
 $races = recupererRaces();
 $horaires=  recupererHoraires();
+$disponibilites = recupererDisponibilités($_SESSION["id"]);
+$racesGardables=  recupererEspeceGardable($_SESSION["id"]);
 
 if (!isset($_SESSION["id"])) {
     header('Location: index.php');
@@ -20,6 +21,7 @@ if (isset($_REQUEST["btnsave"])) {
     foreach ($_POST["disponible"] as $dispo) {
         insererDisponibilites($dispo, $_SESSION["id"]);
     }
+    supprimerChoixRaces($_SESSION["id"]);
     foreach ($_POST["espece"] as $espece) {
         insererChoixRace($espece, $_SESSION["id"]);
     }
@@ -57,9 +59,9 @@ if (isset($_REQUEST["btnsave"])) {
                     <fieldset>
                         <legend>Ajouter des disponibilités</legend>
                         <?php
-                        //afficherTableauDisponibilités();
-                        afficherDisponibilitesDeux([], $horaires,true);
-                        afficherEspeces($races);
+                        
+                        afficherDisponibilites($disponibilites, $horaires,true);
+                        afficherEspeces($races,$racesGardables);
                         ?>
                     </fieldset>
                     <input class="btn btn-success btn-lg" type="submit" value="Enregistrer" name="btnsave" >

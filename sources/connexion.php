@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: permet de se connecter
 -->
 <?php
 session_start();
@@ -31,11 +30,6 @@ if (isset($_REQUEST["btnsave"])) {
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
                         <li><a href="inscription.php">Inscription</a></li>
-                        <?php
-                        if (isset($_SESSION["id"])) {
-                            echo "<li'><a href='profil.php'>Profil</a></li>";
-                        }
-                        ?>
                     </ul>
                 </div>
             </div>

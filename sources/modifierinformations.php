@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Auteur: Hervé Neuenschwander
+But: Permet de modifier les informations personnelles d'un utilisateur
 -->
 <?php
+session_start();
 require './dao.php';
-$utilisateur=  recupererUtilisateur($_GET["id"]);
+$utilisateur=  recupererUtilisateur($_SESSION["id"]);
 if(isset($_REQUEST["btnsave"])){
     modifierUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"], $_GET["id"], $_REQUEST["mail"]);
     header('Location: profil.php');
@@ -35,7 +35,7 @@ if(isset($_REQUEST["btnsave"])){
         </nav>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-2">
-                <form action="modifierinformations.php?id=<?= $_GET["id"]?>" method="POST">
+                <form action="modifierinformations.php" method="POST">
                     <fieldset>
                         <legend>Modification d'informations</legend>
                         <div class="row">
