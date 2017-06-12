@@ -4,7 +4,14 @@ Auteur: Hervé Neuenschwander
 But: Permet de modifier un animal d'un utilisateur
 -->
 <?php
+session_start();
 require './dao.php';
+
+if(!isset($_SESSION["id"])){
+     header('Location:index.php');
+     exit();
+}
+
 $animal = recupererAnimal($_GET["id"]);
 $lesraces = recupererRaces();
 

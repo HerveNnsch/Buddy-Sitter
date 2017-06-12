@@ -4,7 +4,14 @@ Auteur: Hervé Neuenschwander
 But: Permet de modifier l'adresse d'un utilisateur
 -->
 <?php
+session_start();
 require './dao.php';
+
+if(!isset($_SESSION["id"])){
+     header('Location:index.php');
+     exit();
+}
+
 $adresse = recupererAdresse($_GET["idAdresse"]);
 if(isset($_REQUEST["btnsave"])){
     $rue = str_replace(' ', '+', $_REQUEST["rue"]);

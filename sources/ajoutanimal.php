@@ -6,11 +6,18 @@ But: permet d'ajouter un animal
 <?php
 session_start();
 require './dao.php';
+
+if (!isset($_SESSION["id"])) {
+    header('Location:index.php');
+    exit();
+}
+
 $lesraces = recupererRaces();
 if (isset($_REQUEST["btnsave"])) {
     $animal = inscriptionAnimal($_REQUEST["races"], $_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_SESSION["id"]);
     if (count($animal) > 0) {
         header('Location:profil.php');
+        exit();
     } else {
         echo "problème pendant l'insertion";
     }
@@ -32,6 +39,7 @@ if (isset($_REQUEST["btnsave"])) {
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
                         <li><a href="profil.php">Profil</a></li>
+                        <li><a href="disponibilites.php">Disponibilités</a></li>
                         <li><a href="deconnexion.php">Déconnexion</a></li>
                     </ul>
                 </div>
@@ -44,8 +52,10 @@ if (isset($_REQUEST["btnsave"])) {
                         <legend>Ajout d'un animal</legend>
                         <div class='row'>
                             <div class="col-lg-2"><label>Espèce :</label></div>
-                            <div class="col-lg-10"><select name="races">
-                                    <?php//affiche la liste à choix pour les races
+                            <div class="col-lg-10">
+                                <select name="races">
+                                    <?php
+//affiche la liste à choix pour les races
                                     foreach ($lesraces as $race) {
                                         echo "<option value=" . $race["idEspece"] . ">" . $race["NomEspece"] . "</option>";
                                     }

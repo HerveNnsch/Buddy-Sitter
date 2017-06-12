@@ -7,14 +7,16 @@ But: permet à un utilisateur d'insérer ses disponibilités
 session_start();
 require './dao.php';
 require './phptohtml.php';
-$races = recupererRaces();
-$horaires=  recupererHoraires();
-$disponibilites = recupererDisponibilités($_SESSION["id"]);
-$racesGardables=  recupererEspeceGardable($_SESSION["id"]);
 
 if (!isset($_SESSION["id"])) {
     header('Location: index.php');
+    exit();
 }
+
+$races = recupererRaces();
+$horaires = recupererHoraires();
+$disponibilites = recupererDisponibilités($_SESSION["id"]);
+$racesGardables = recupererEspeceGardable($_SESSION["id"]);
 
 if (isset($_REQUEST["btnsave"])) {
     deleteDisponibilites($_SESSION["id"]);
@@ -26,6 +28,7 @@ if (isset($_REQUEST["btnsave"])) {
         insererChoixRace($espece, $_SESSION["id"]);
     }
     header('Location: profil.php');
+    exit();
 }
 ?>
 <html>
@@ -34,6 +37,7 @@ if (isset($_REQUEST["btnsave"])) {
         <link href="startbootstrap-freelancer-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="startbootstrap-freelancer-gh-pages/css/freelancer.min.css" rel="stylesheet" type="text/css">
         <link href="startbootstrap-freelancer-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="jquery-3.1.0.js"></script>
         <title>Disponibilités</title>
     </head>
     <body>
@@ -43,8 +47,8 @@ if (isset($_REQUEST["btnsave"])) {
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
+                        <li><a href='profil.php'>Profil</a></li>
                         <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
-                        <li><a href='disponibilites.php'>Disponibilités</a></li>
                         <li><a href='deconnexion.php'>Déconnexion</a></li>
                     </ul>
                 </div>
@@ -58,11 +62,8 @@ if (isset($_REQUEST["btnsave"])) {
                 <form action="disponibilites.php" method="POST">
                     <fieldset>
                         <legend>Ajouter des disponibilités</legend>
-                        <?php
-                        
-                        afficherDisponibilites($disponibilites, $horaires,true);
-                        afficherEspeces($races,$racesGardables);
-                        ?>
+                        <?php afficherDisponibilites($disponibilites, $horaires, true); ?>
+                        <br/><?php afficherEspeces($races, $racesGardables); ?>
                     </fieldset>
                     <input class="btn btn-success btn-lg" type="submit" value="Enregistrer" name="btnsave" >
                 </form>

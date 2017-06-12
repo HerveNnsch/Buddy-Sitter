@@ -370,3 +370,16 @@ function recupererEspeceGardable($idutilisateur) {
         die("erreur pendant la récupération des éspèces gardables");
     }
 }
+
+function rechercherGardien($dispos,$idEspece,$lat,$lng){
+    $ids = implode(",", $dispos);
+    str_replace('"', '', $ids);
+    try {
+        $pssEspeces = maConnexion()->prepare("SELECT * FROM recherche WHERE idHoraire IN (" . $ids . ") AND idEspece = :idEspece GROup BY idUtilisateur");
+        $pssEspeces->bindParam(':idEspece', $idEspece);
+        $pssEspeces->execute();
+        return $pssEspeces->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException$e) {
+        throw $e;
+    }
+}

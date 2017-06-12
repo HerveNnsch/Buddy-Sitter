@@ -86,6 +86,19 @@ function afficherEspeces($infos , $especes) {
     endforeach;
 }
 
+
+function afficherAnimauxSelect($infos){
+    ?>
+    <select name="animal"><?php
+        foreach ($infos as $animal) {
+            echo "<option value=" . $animal["idAnimal"] . ">" . $animal["NomAnimal"] . "</option>";
+        }  
+    
+    ?></select>
+    
+    
+    <?php
+}
 /*function afficherTableauDisponibilités() {
     ?>
     <table border="1">
@@ -208,7 +221,7 @@ function afficherDisponibilites($disponible,$horaires,$modif){
     foreach ($disponible as $id) {
         $idHoraire[]=$id["idHoraire"];
     }    ?>
-        <table border='1'>
+        <table border='1' id="dispo">
             <tr>
                 <td>Lundi</td>
                 <td>Mardi</td>
@@ -222,7 +235,7 @@ function afficherDisponibilites($disponible,$horaires,$modif){
                 <?php for($i=0;$i<count($horaires);$i+=3):?>
                 <td>
                     <?php for($j=$i;$j<$i+3;$j++):?>
-                        <input type="checkbox" name="disponible[]" onclick="<?php if(!$modif){echo "return false";} ?>" value="<?= $horaires[$j]["idHoraire"] ?>" <?php if(in_array($horaires[$j]["idHoraire"], $idHoraire)) {echo"checked";} ?> > <?= $horaires[$j]["Periode"]?> <br/>
+                        <input class="dispos" type="checkbox" name="disponible[]" onclick="<?php if(!$modif){echo "return false";} ?>" value="<?= $horaires[$j]["idHoraire"] ?>" <?php if(in_array($horaires[$j]["idHoraire"], $idHoraire)) {echo"checked";} ?> > <?= $horaires[$j]["Periode"]?> <br/>
                  <?php endfor;?>
                 </td>
                 <?php endfor;?>

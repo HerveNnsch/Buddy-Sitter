@@ -7,6 +7,12 @@ But: Affiche le profil d'un utilisateur
 session_start();
 require './dao.php';
 require './phptohtml.php';
+
+if(!isset($_SESSION["id"])){
+     header('Location:index.php');
+     exit();
+}
+
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
 $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
 $especes = recupererRaces();
@@ -30,6 +36,7 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
                         <li><a href="index.php">Accueil</a></li>
                         <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                         <li><a href='disponibilites.php'>Disponibilités</a></li>
+                        <li><a href="rechercher.php">Rechercher</a></li>
                         <li><a href='deconnexion.php'>Déconnexion</a></li>
                     </ul>
                 </div>
@@ -46,9 +53,8 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
                 <br/>
                 <h2>Mes animaux</h2>
                 <?php afficherAnimaux($animaux, $especes) ?>
-                <?php
-                afficherDisponibilites($disponibilites, recupererHoraires(),false);
-                ?>
+                <h2>Mes disponibilités</h2>
+                <?php afficherDisponibilites($disponibilites, recupererHoraires(),false);?>
                 <a href="disponibilites.php">Modifier</a>
             </div>
         </div>

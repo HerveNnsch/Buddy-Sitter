@@ -6,6 +6,12 @@ But: Permet de modifier les informations personnelles d'un utilisateur
 <?php
 session_start();
 require './dao.php';
+
+if(!isset($_SESSION["id"])){
+     header('Location:index.php');
+     exit();
+}
+
 $utilisateur=  recupererUtilisateur($_SESSION["id"]);
 if(isset($_REQUEST["btnsave"])){
     modifierUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"], $_GET["id"], $_REQUEST["mail"]);

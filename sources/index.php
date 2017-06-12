@@ -18,7 +18,7 @@ session_start();
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-                <div class="collapse navbar-collapse">
+                <div>
                     <ul class="nav navbar-nav navbar-right">
                         
                         <?php
