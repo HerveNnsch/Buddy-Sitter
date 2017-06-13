@@ -41,7 +41,7 @@ session_start();
                     <hr class="star-primary">
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 text-center">Bienvenue sur le site BuddySitter qui permet de garder vos animaux de compagnies !</div>
+                    <div class="col-lg-12 text-center">Bienvenue sur le site BuddySitter qui permet de garder vos animaux de compagnie !</div>
                 </div>
             </div>
         </div>
