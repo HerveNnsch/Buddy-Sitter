@@ -2,6 +2,16 @@
 /*
  * Auteur: Hervé Neuenschwander
  * But: regroupe des fonctions pour afficher des informations en html depuis du PHP
+ * Date: 13.06.2017
+ * -------------------------------
+ * Version 0.8 Date 13.06.2017
+ * Six fonctions qui permettent d'afficher des infos
+ * afficherutilisateur: Affiche les infos d'un utilisateur
+ * afficherAdresse: Affiche l'adresse
+ * afficherAnimaux: Affiche un tableau des animaux d'un utilisateur
+ * afficherEspeces: Affiche les especes dans des chekbox
+ * afficherAnimauxSelect: Affiche les animaux d'un utilisateur dans un select
+ * afficherDisponibilites: Affiche un tableau avec des chekbox pour les disponibilités
  */
 
 /**
@@ -62,10 +72,8 @@ function afficherAnimaux($infos, $especes) {
                 <td><?= $animal["Remarques"] ?></td>
                 <td><a href='modifieranimal.php?id=<?= $animal["idAnimal"] ?>'>Modifier</a></td>
             </tr>
-
         <?php endforeach; ?>
     </table>
-
     <?php
 }
 
@@ -76,9 +84,7 @@ function afficherAnimaux($infos, $especes) {
 function afficherEspeces($infos , $especes) {
     $gardable=[];
     foreach ($especes as $id) {
-        $gardable[]=$id["idEspece"];
-    }   
-    ?>
+        $gardable[]=$id["idEspece"];}?>
     <label>Espèces:</label><br/>
     <?php foreach ($infos as $animal) : ?>
     <input type='checkbox' name='espece[]' value='<?= $animal["idEspece"] ?>'<?php if(in_array($animal["idEspece"], $gardable)){echo "checked";}?>><?= $animal["NomEspece"] ?><br/>
@@ -86,129 +92,19 @@ function afficherEspeces($infos , $especes) {
     endforeach;
 }
 
-
+/**
+ * Affiche un select avec les animaux d'un utilisateur
+ * @param array $infos tablaeu des animaux d'un utilisateur
+ */
 function afficherAnimauxSelect($infos){
     ?>
     <select name="animal"><?php
         foreach ($infos as $animal) {
             echo "<option value=" . $animal["idAnimal"] . ">" . $animal["NomAnimal"] . "</option>";
-        }  
-    
+        }
     ?></select>
-    
-    
     <?php
 }
-/*function afficherTableauDisponibilités() {
-    ?>
-    <table border="1">
-        <tr>
-            <td>Lundi</td>
-            <td>Mardi</td>
-            <td>Mercredi</td>
-            <td>Jeudi</td>
-            <td>Vendredi</td>
-            <td>Samedi</td>
-            <td>Dimanche</td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" name="disponible[]" value="1"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="2"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="3"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="4"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="5"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="6"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="7"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="8"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="9"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="10"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="11"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="12"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="13"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="14"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="15"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="16"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="17"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="18"> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" value="19"> Matin<br>
-                <input type="checkbox" name="disponible[]" value="20"> Après-midi<br>
-                <input type="checkbox" name="disponible[]" value="21"> Soir
-            </td>
-        </tr>
-    </table>
-    <?php
-}*/
-
-/*function afficherDisponibilites($infos){
-    $idHoraire;
-    foreach ($infos as $id) {
-        $idHoraire[]=$id["idHoraire"];
-    }
-    ?>
-    <table border="1">
-        <tr>
-            <td>Lundi</td>
-            <td>Mardi</td>
-            <td>Mercredi</td>
-            <td>Jeudi</td>
-            <td>Vendredi</td>
-            <td>Samedi</td>
-            <td>Dimanche</td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="1" <?php if(in_array('1', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="2" <?php if(in_array('2', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="3" <?php if(in_array('3', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="4" <?php if(in_array('4', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="5" <?php if(in_array('5', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="6" <?php if(in_array('6', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="7" <?php if(in_array('7', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="8" <?php if(in_array('8', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="9" <?php if(in_array('9', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="10" <?php if(in_array('10', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="11" <?php if(in_array('11', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="12" <?php if(in_array('12', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="13" <?php if(in_array('13', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="14" <?php if(in_array('14', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="15" <?php if(in_array('15', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="16" <?php if(in_array('16', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="17" <?php if(in_array('17', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="18" <?php if(in_array('18', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-            <td>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="19" <?php if(in_array('19', $idHoraire)) {echo"checked";} ?>> Matin<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="20" <?php if(in_array('20', $idHoraire)) {echo"checked";} ?>> Après-midi<br>
-                <input type="checkbox" name="disponible[]" onclick="return false" value="21" <?php if(in_array('21', $idHoraire)) {echo"checked";} ?>> Soir
-            </td>
-        </tr>
-    </table>
-        <a href='modifierdisponibilites.php'>Modifier</a>
-        <?php
-}*/
 
 /**
  * Affiche le tableau des disponibilités

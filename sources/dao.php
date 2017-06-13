@@ -206,6 +206,19 @@ function recupererAdresse($idAdresse) {
     }
 }
 
+function recupererAdresseDeUtilisateur($idUtilisateur) {
+    try {
+        $pssAdresse = maConnexion()->prepare("SELECT adresses.idAdresse, CodePostal, Lat, Lng, NomRue, Numero, Pays "
+                . "FROM adresses,utilisateurs "
+                . "WHERE utilisateurs.idUtilisateur = :idutilisateur AND adresses.idAdresse = utilisateurs.idAdresse");
+        $pssAdresse->bindParam(':idutilisateur', $idUtilisateur,PDO::PARAM_INT);
+        $pssAdresse->execute();
+        return $pssAdresse->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw $e;
+    }
+}
+
 /**
  * récupère toutes les horaires
  * @return array tableau associatif 
@@ -371,12 +384,20 @@ function recupererEspeceGardable($idutilisateur) {
     }
 }
 
-function rechercherGardien($dispos,$idEspece,$lat,$lng){
+function rechercherGardien($dispos, $idEspece, $lat, $lng, $distance) {
     $ids = implode(",", $dispos);
     str_replace('"', '', $ids);
     try {
-        $pssEspeces = maConnexion()->prepare("SELECT * FROM recherche WHERE idHoraire IN (" . $ids . ") AND idEspece = :idEspece GROup BY idUtilisateur");
+        $pssEspeces = maConnexion()->prepare("SELECT * "
+                . "FROM recherche "
+                . "WHERE idHoraire IN (" . $ids . ") "
+                . "AND idEspece = :idEspece "
+                . "AND (DEGREES(Acos(sin(radians(:lat))*sin(radians(lat))+cos(radians(:lat))*cos(radians(lat))*cos(radians(:lng-lng)))))*110.544 < :distance "
+                . "GROUP BY idUtilisateur");
         $pssEspeces->bindParam(':idEspece', $idEspece);
+        $pssEspeces->bindParam(':lat', $lat);
+        $pssEspeces->bindParam(':lng', $lng);
+        $pssEspeces->bindParam(':distance', $distance);
         $pssEspeces->execute();
         return $pssEspeces->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException$e) {

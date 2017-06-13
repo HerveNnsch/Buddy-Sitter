@@ -12,6 +12,15 @@ if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
 }
+$erreur = "";
+if (isset($_GET["erreur"])) {
+    if ($_GET["erreur"] == 1) {
+        $erreur = "Veuillez rentrer un moment de la semaine";
+    }
+    if ($_GET["erreur"] == 2) {
+        $erreur = "Personne ne correspond à votre recherche";
+    }
+}
 
 $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
@@ -43,7 +52,10 @@ $horaires = recupererHoraires();
             <div class="col-lg-10 col-lg-offset-2">
                 <form action="resultats.php" method="POST">
                     <fieldset>
-                        <legend>Informations d'identité</legend>
+                        <legend>Rechercher un gardien</legend>
+                        <div class="row">
+                            <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-2"><label>Animal :</label></div>
                             <div class="col-lg-10"><?php afficherAnimauxSelect($animaux); ?></div>
@@ -55,6 +67,10 @@ $horaires = recupererHoraires();
                         <div class="row">
                             <div class="col-lg-2"><label>Moments à garder :</label></div>
                             <div class="col-lg-10"><?php afficherDisponibilites([], $horaires, true) ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><label>Distance maximum :</label></div>
+                            <div class="col-lg-10"><input type="number" name="distance" required="" min="1" max="200" value="10"></div>
                         </div>
                         <input class="btn btn-success btn-lg" type="submit" value="Rechercher" name="btnsave" >
                     </fieldset>
