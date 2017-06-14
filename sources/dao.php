@@ -8,6 +8,8 @@
  * version 0.8.1 Date 14.06.2017
  * supprimer les try catch autour des fonctions
  * renommer recupererRaces en recupererEspeces
+ * terminer la fonction rechercherGardien
+ * documenter les fonctions qui ne l'étaient pas encore
  * 
  * version 0.8 Date 14.06.2017
  * regroupe les fonctions pour accéder à la BD
@@ -345,6 +347,11 @@ function modifierAnimal($nom, $naissance, $remarque, $espece, $idAnimal) {
     $psuAnimaux->execute();
 }
 
+/**
+ * récupère les espèce que le gardiene st d'accord de garder
+ * @param int $idUtilisateur
+ * @return array un tableau contenant les id des espèces que le gardien est d'accord de garder
+ */
 function recupererEspeceGardable($idUtilisateur) {
 
     $pssEspeces = maConnexion()->prepare("SELECT idEspece FROM peut_garder WHERE idUtilisateur=:id");
@@ -353,6 +360,15 @@ function recupererEspeceGardable($idUtilisateur) {
     return $pssEspeces->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Recherche un gardien disponible
+ * @param array $dispos les moments de la semaine ou il doit être disponible
+ * @param int $idEspece lid de l'espèce de l'animal qui doit êtr garder
+ * @param int $lat la latitude du gardien
+ * @param int $lng la longitude du gardien
+ * @param int $distance la distance maximale
+ * @return array retourne un tableau contenant les gardiens disponibles
+ */
 function rechercherGardien($dispos, $idEspece, $lat, $lng, $distance) {
     //le tableau des dispos est transformé en string pour être insérer dans la requête.
     $ids = implode(",", $dispos);

@@ -24,6 +24,7 @@ session_start();
                         <?php
                         if (isset($_SESSION["id"])) {
                             echo "<li><a href='profil.php'>Profil</a></li>";
+                            echo "<li><a href='rechercher.php'>Rechercher</a></li>";
                             echo "<li><a href='deconnexion.php'>Déconnexion</a></li>";
                         }else{
                             echo "<li><a href='connexion.php'>Connexion</a></li>";

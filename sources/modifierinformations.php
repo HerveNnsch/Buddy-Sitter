@@ -30,13 +30,13 @@ if(isset($_REQUEST["btnsave"])){
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-                <div class="collapse navbar-collapse">
+  
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.php">Accueil</a></li>
                         <li><a href='profil.php'>Profil</a></li>
                         <li><a href="deconnexion.php">Déconnexion</a></li>
                     </ul>
-                </div>
+     
             </div>
         </nav>
         <div class="row">
