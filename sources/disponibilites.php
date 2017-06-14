@@ -13,7 +13,7 @@ if (!isset($_SESSION["id"])) {
     exit();
 }
 
-$races = recupererRaces();
+$races = recupererEspeces();
 $horaires = recupererHoraires();
 $disponibilites = recupererDisponibilités($_SESSION["id"]);
 $racesGardables = recupererEspeceGardable($_SESSION["id"]);

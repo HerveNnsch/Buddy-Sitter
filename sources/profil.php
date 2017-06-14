@@ -15,7 +15,7 @@ if(!isset($_SESSION["id"])){
 
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
 $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
-$especes = recupererRaces();
+$especes = recupererEspeces();
 $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
 $disponibilites = recupererDisponibilités($_SESSION["id"]);
 ?>

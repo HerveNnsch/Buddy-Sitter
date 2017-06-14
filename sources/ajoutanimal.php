@@ -12,7 +12,7 @@ if (!isset($_SESSION["id"])) {
     exit();
 }
 
-$lesraces = recupererRaces();
+$lesraces = recupererEspeces ();
 if (isset($_REQUEST["btnsave"])) {
     $animal = inscriptionAnimal($_REQUEST["races"], $_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_SESSION["id"]);
     if (count($animal) > 0) {
