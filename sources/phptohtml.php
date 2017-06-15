@@ -4,6 +4,10 @@
  * But: regroupe des fonctions pour afficher des informations en html depuis du PHP
  * Date: 13.06.2017
  * -------------------------------
+ * Version 0.9.1 Date 15.06.2017
+ * Modifier les fonction afficherUtilisateur et afficherAniamux
+ * pour changer la mise en forme de la date
+ * 
  * Version 0.9 Date 14.06.2017
  * Ajout de la fonction afficherGardien
  * 
@@ -27,7 +31,8 @@ function afficherUtilisateur($infos) {
         <legend>Informations personnelles</legend>
         <label>Nom: <?= $infos[0]["Nom"] ?></label><br/>
         <label>Prénom: <?= $infos[0]["Prenom"] ?></label><br/>
-        <label>Date de naissance: <?= $infos[0]["DateNaissance"] ?></label><br/>
+        <?php $date = explode("-", $infos[0]["DateNaissance"]);?>
+        <label>Date de naissance: <?= $date[2]." / ".$date[1]." / ".$date[0]; ?></label><br/>
         <label>Email: <?= $infos[0]["Email"] ?></label><br/>
         <label>Description: <?= $infos[0]["Description"] ?></label><br/>
         <a href='modifierinformations.php'>Modifier</a>
@@ -71,7 +76,8 @@ function afficherAnimaux($infos, $especes) {
             <tr>
                 <td><?= $animal["NomAnimal"] ?></td>
                 <td><?= $especes[$animal["idEspece"] - 1]["NomEspece"] ?></td>
-                <td><?= $animal["DateNaissanceAnimal"] ?></td>
+                <?php $date =  explode("-", $animal["DateNaissanceAnimal"]) ?>
+                <td><?= $date[2]." / ".$date[1]." / ".$date[0]; ?></td>
                 <td><?= $animal["Remarques"] ?></td>
                 <td><a href='modifieranimal.php?id=<?= $animal["idAnimal"] ?>'>Modifier</a></td>
             </tr>
@@ -126,15 +132,15 @@ function afficherDisponibilites($disponible, $horaires, $modif) {
         $idHoraire[] = $id["idHoraire"];
     }
     ?>
-    <table border='1' id="dispo">
+    <table class="table-responsive table-bordered" style="width: 70%;" id="dispo">
         <tr>
-            <td>Lundi</td>
-            <td>Mardi</td>
-            <td>Mercredi</td>
-            <td>Jeudi</td>
-            <td>Vendredi</td>
-            <td>Samedi</td>
-            <td>Dimanche</td>
+            <th>Lundi</th>
+            <th>Mardi</th>
+            <th>Mercredi</th>
+            <th>Jeudi</th>
+            <th>Vendredi</th>
+            <th>Samedi</th>
+            <th>Dimanche</th>
         </tr>
         <tr>
             <?php for ($i = 0; $i < count($horaires); $i+=3): ?>

@@ -2,15 +2,20 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Affiche le profil d'un utilisateur
+Date: 15.06.2017
+-------------------
+Version 1.0 Date: 15.06.2017
+
+
 -->
 <?php
 session_start();
 require './dao.php';
 require './phptohtml.php';
 
-if(!isset($_SESSION["id"])){
-     header('Location:index.php');
-     exit();
+if (!isset($_SESSION["id"])) {
+    header('Location:index.php');
+    exit();
 }
 
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
@@ -18,6 +23,7 @@ $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
 $especes = recupererEspeces();
 $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
 $disponibilites = recupererDisponibilités($_SESSION["id"]);
+$eGardable = recupererEspeceGardable($_SESSION["id"]);
 ?>
 <html>
     <head>
@@ -31,15 +37,15 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-        
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
-                        <li><a href='disponibilites.php'>Disponibilités</a></li>
-                        <li><a href="rechercher.php">Rechercher</a></li>
-                        <li><a href='deconnexion.php'>Déconnexion</a></li>
-                    </ul>
-              
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='disponibilites.php'>Disponibilités</a></li>
+                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
@@ -54,7 +60,14 @@ $disponibilites = recupererDisponibilités($_SESSION["id"]);
                 <h2>Mes animaux</h2>
                 <?php afficherAnimaux($animaux, $especes) ?>
                 <h2>Mes disponibilités</h2>
-                <?php afficherDisponibilites($disponibilites, recupererHoraires(),false);?>
+                <?php afficherDisponibilites($disponibilites, recupererHoraires(), false); ?>
+                Vous gardez les :
+                <?php
+                foreach ($eGardable as $idEspece) {
+                    echo $especes[$idEspece["idEspece"] - 1]["NomEspece"]." ";
+                }
+                ?>
+                <br/>
                 <a href="disponibilites.php">Modifier</a>
             </div>
         </div>

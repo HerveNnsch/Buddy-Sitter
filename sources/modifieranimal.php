@@ -13,7 +13,7 @@ if(!isset($_SESSION["id"])){
 }
 
 $animal = recupererAnimal($_GET["id"]);
-$lesraces = recupererEspece();
+$lesraces = recupererEspeces();
 
 if(isset($_REQUEST["btnsave"])){
     modifierAnimal($_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_REQUEST["race"], $_GET["id"]);
