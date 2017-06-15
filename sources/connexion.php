@@ -6,11 +6,20 @@ But: permet de se connecter
 <?php
 session_start();
 require './dao.php';
+
+$erreur = "";
+if (isset($_GET["erreur"])) {
+    if ($_GET["erreur"] == 1) {
+        $erreur = "Le mot de passe et le nom d'utilisateur ne correspondent pas";
+    }
+}
 if (isset($_REQUEST["btnsave"])) {
     $utilisateur = connexion(sha1($_REQUEST["pwd"]), $_REQUEST["nom"]);
     if (count($utilisateur) > 0) {
         $_SESSION["id"] = $utilisateur[0]["idUtilisateur"];
         header('Location: index.php');
+    } else {
+        header('Location: connexion.php?erreur=1');
     }
 }
 ?>
@@ -26,18 +35,21 @@ if (isset($_REQUEST["btnsave"])) {
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-              
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href="inscription.php">Inscription</a></li>
-                    </ul>
-          
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="inscription.php">Inscription</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-2">
                 <div class="col-lg-12 ">
                     <h2>Connexion</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
                 </div>
                 <form action="connexion.php" method="POST">
                     <div class="row">

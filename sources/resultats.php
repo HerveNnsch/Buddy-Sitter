@@ -2,24 +2,34 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Affiche les gardien disponibles pour un gardiennage
+Date: 15.06.2017
+
+-------------------
+Version 1.0 Date 15.06.2017
+La page affiche les gardien disponibles et affiche une carte avec des marqueur 
+ou habitent des gardiens
+
 -->
 <?php
 session_start();
 require './dao.php';
 require './phptohtml.php';
-
+//si on accède à la page sans être connecté on est redirigé
 if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
 }
+
 if (isset($_REQUEST["disponible"])) {
     $animal = recupererAnimal($_REQUEST["animal"]);
     $adresse = recupererAdresseDeUtilisateur($_SESSION["id"]);
     $resultats = rechercherGardien($_REQUEST["disponible"], $animal[0]["idEspece"], $adresse[0]["Lat"], $adresse[0]["Lng"], $_REQUEST["distance"]);
+    //si aucun gardien n'a été trouvé on redirige vers la page de recherche avec l'erreur n° 2
     if (count($resultats) < 1) {
         header('Location:rechercher.php?erreur=2');
         exit();
     }
+    //si aucun moment de la semaine n'a été coché on redirige vers recherche avec l'erreur n°1
 } else {
     header('Location:rechercher.php?erreur=1');
     exit();
@@ -55,7 +65,7 @@ if (isset($_REQUEST["disponible"])) {
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAEkv33ltVdDj2PWlspis4tGUNOsScego&callback=myMap"></script>
                  <script>
                     var map;
-                    window.myMap = function (lat, lng) {
+                    function myMap(lat, lng) {
                         var mapProp = {
                             center: new google.maps.LatLng(lat, lng),
                             zoom: 8
@@ -77,9 +87,7 @@ if (isset($_REQUEST["disponible"])) {
                     myMap(<?php echo $resultats[0]["lat"] ?>,<?php echo $resultats[0]["lng"] ?>);
                 </script>
                 <div class="col-lg-5 col-lg-offset-1 text-left">
-                    <?php foreach ($resultats as $gardien): ?>
-
-                        <?php
+                    <?php foreach ($resultats as $gardien): 
                         $infosGardien = recupererUtilisateur($gardien["idUtilisateur"]);
                         $adresseGardien = recupererAdresseDeUtilisateur($infosGardien[0]["idAdresse"]);
                         afficherGardien($infosGardien, $adresseGardien);
