@@ -12,20 +12,23 @@ if (!isset($_SESSION["id"])) {
     header('Location: index.php');
     exit();
 }
-
 $races = recupererEspeces();
 $horaires = recupererHoraires();
-$disponibilites = recupererDisponibilités($_SESSION["id"]);
+$disponibilites = recupererDisponibilites($_SESSION["id"]);
 $racesGardables = recupererEspeceGardable($_SESSION["id"]);
 
 if (isset($_REQUEST["btnsave"])) {
     deleteDisponibilites($_SESSION["id"]);
-    foreach ($_POST["disponible"] as $dispo) {
-        insererDisponibilites($dispo, $_SESSION["id"]);
+    if (count($_POST["disponible"]) > 0) {
+        foreach ($_POST["disponible"] as $dispo) {
+            insererDisponibilites($dispo, $_SESSION["id"]);
+        }
     }
     supprimerChoixRaces($_SESSION["id"]);
-    foreach ($_POST["espece"] as $espece) {
-        insererChoixRace($espece, $_SESSION["id"]);
+    if (count($_POST["espece"]) > 0) {
+        foreach ($_POST["espece"] as $espece) {
+            insererChoixRace($espece, $_SESSION["id"]);
+        }
     }
     header('Location: profil.php');
     exit();
@@ -44,14 +47,14 @@ if (isset($_REQUEST["btnsave"])) {
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-                
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
-                        <li><a href='deconnexion.php'>Déconnexion</a></li>
-                    </ul>
-               
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href='profil.php'>Profil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
@@ -62,7 +65,7 @@ if (isset($_REQUEST["btnsave"])) {
                 <form action="disponibilites.php" method="POST">
                     <fieldset>
                         <legend>Ajouter des disponibilités</legend>
-                        <?php afficherDisponibilites($disponibilites, $horaires, true); ?>
+<?php afficherDisponibilites($disponibilites, $horaires, true); ?>
                         <br/><?php afficherEspeces($races, $racesGardables); ?>
                     </fieldset>
                     <input class="btn btn-success btn-lg" type="submit" value="Enregistrer" name="btnsave" >

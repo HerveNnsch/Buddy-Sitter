@@ -47,14 +47,14 @@ if (isset($_REQUEST["disponible"])) {
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-          
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href="rechercher.php">Rechercher</a></li>
-                        <li><a href='deconnexion.php'>Déconnexion</a></li>
-                    </ul>
-               
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href='profil.php'>Profil</a></li>
+                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
@@ -63,7 +63,7 @@ if (isset($_REQUEST["disponible"])) {
                 <div class="col-lg-4" id="googleMap" style="width:40%;height:400px;margin-left: 25px;"></div>
                 <p style="color: #18BC9C">Cliquez sur un marqueur pour savoir qui habite la !</p>
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAEkv33ltVdDj2PWlspis4tGUNOsScego&callback=myMap"></script>
-                 <script>
+                <script>
                     var map;
                     function myMap(lat, lng) {
                         var mapProp = {
@@ -71,7 +71,8 @@ if (isset($_REQUEST["disponible"])) {
                             zoom: 8
                         };
                         map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-                    };
+                    }
+                    ;
 
                     function addMarker(lat, lng, nom) {
                         var myCenter = new google.maps.LatLng(lat, lng);
@@ -87,7 +88,8 @@ if (isset($_REQUEST["disponible"])) {
                     myMap(<?php echo $resultats[0]["lat"] ?>,<?php echo $resultats[0]["lng"] ?>);
                 </script>
                 <div class="col-lg-5 col-lg-offset-1 text-left">
-                    <?php foreach ($resultats as $gardien): 
+                    <?php
+                    foreach ($resultats as $gardien):
                         $infosGardien = recupererUtilisateur($gardien["idUtilisateur"]);
                         $adresseGardien = recupererAdresseDeUtilisateur($infosGardien[0]["idAdresse"]);
                         afficherGardien($infosGardien, $adresseGardien);

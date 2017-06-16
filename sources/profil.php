@@ -22,7 +22,7 @@ $utilisateur = recupererUtilisateur($_SESSION["id"]);
 $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
 $especes = recupererEspeces();
 $animaux = recupererAnimauxDepuisUtilisateur($_SESSION["id"]);
-$disponibilites = recupererDisponibilités($_SESSION["id"]);
+$disponibilites = recupererDisponibilites($_SESSION["id"]);
 $eGardable = recupererEspeceGardable($_SESSION["id"]);
 ?>
 <html>

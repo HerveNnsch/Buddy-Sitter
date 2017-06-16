@@ -15,12 +15,13 @@ if (!isset($_SESSION["id"])) {
 $lesraces = recupererEspeces ();
 if (isset($_REQUEST["btnsave"])) {
     $animal = inscriptionAnimal($_REQUEST["races"], $_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_SESSION["id"]);
-    if (count($animal) > 0) {
-        header('Location:profil.php');
+    header('Location:profil.php');
+    /*if (count($animal) > 0) {
+        
         exit();
     } else {
         echo "problème pendant l'insertion";
-    }
+    }*/
 }
 ?>
 <html>

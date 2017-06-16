@@ -7,15 +7,25 @@ But: Permet de modifier les informations personnelles d'un utilisateur
 session_start();
 require './dao.php';
 
-if(!isset($_SESSION["id"])){
-     header('Location:index.php');
-     exit();
+if (!isset($_SESSION["id"])) {
+    header('Location:index.php');
+    exit();
+}
+$erreur = "";
+if (isset($_GET["erreur"])) {
+    if ($_GET["erreur"] == 1) {
+        $erreur = "Les deux mots de passe ne correspondent pas";
+    }
 }
 
-$utilisateur=  recupererUtilisateur($_SESSION["id"]);
-if(isset($_REQUEST["btnsave"])){
-    modifierUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"], $_GET["id"], $_REQUEST["mail"]);
-    header('Location: profil.php');
+$utilisateur = recupererUtilisateur($_SESSION["id"]);
+if (isset($_REQUEST["btnsave"])) {
+    if ($_REQUEST["pwd"] == $_REQUEST["pwd2"]) {
+        modifierUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd"]), $_REQUEST["date"], $_REQUEST["desc"], $_SESSION["id"], $_REQUEST["mail"]);
+        header('Location: profil.php');
+    } else {
+        header('Location: modifierinformations.php?erreur=1');
+    }
 }
 ?>
 <html>
@@ -30,19 +40,22 @@ if(isset($_REQUEST["btnsave"])){
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-  
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href="deconnexion.php">Déconnexion</a></li>
-                    </ul>
-     
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href='profil.php'>Profil</a></li>
+                    <li><a href="deconnexion.php">Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-2">
                 <form action="modifierinformations.php" method="POST">
                     <fieldset>
+                        <div class="row">
+                            <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
+                        </div>
                         <legend>Modification d'informations</legend>
                         <div class="row">
                             <div class="col-lg-2"><label>Nom :</label></div>

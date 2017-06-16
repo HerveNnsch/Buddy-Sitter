@@ -271,7 +271,7 @@ function insererChoixRace($idEspece, $idUtilisateur) {
  * @param int $id id de l'utilisateur
  * @return array tableau associatif
  */
-function recupererDisponibilités($idUtilisateur) {
+function recupererDisponibilites($idUtilisateur) {
 
     $pssHoraire = maConnexion()->prepare("SELECT idHoraire FROM disponible WHERE idUtilisateur = :id");
     $pssHoraire->bindParam(':id', $idUtilisateur, PDO::PARAM_INT);
