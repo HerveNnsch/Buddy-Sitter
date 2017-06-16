@@ -7,13 +7,13 @@ But: Permet de modifier l'adresse d'un utilisateur
 session_start();
 require './dao.php';
 
-if(!isset($_SESSION["id"])){
-     header('Location:index.php');
-     exit();
+if (!isset($_SESSION["id"])) {
+    header('Location:index.php');
+    exit();
 }
 
 $adresse = recupererAdresse($_GET["idAdresse"]);
-if(isset($_REQUEST["btnsave"])){
+if (isset($_REQUEST["btnsave"])) {
     $rue = str_replace(' ', '+', $_REQUEST["rue"]);
     $curl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $_REQUEST["numero"] . ",+" . $rue . ",+" . $_REQUEST["codepostal"] . ",+" . $_REQUEST["pays"] . "&key=AIzaSyDdezmXoTVAy5mzdrq1qWmpErIj9kuCkH4";
     $getCoordonée = curl_init($curl);
@@ -38,18 +38,21 @@ if(isset($_REQUEST["btnsave"])){
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-           
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href="deconnexion.php">Déconnexion</a></li>
-                    </ul>
-       
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li class="active"><a href="profil.php">Profil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='disponibilites.php'>Disponibilités</a></li>
+                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-2">
-                <form action="modifieradresse.php?idAdresse=<?=$_GET["idAdresse"]?>" method="POST">
+                <form action="modifieradresse.php?idAdresse=<?= $_GET["idAdresse"] ?>" method="POST">
                     <fieldset>
                         <legend>Modification d'adresse</legend>
                         <div class="row">

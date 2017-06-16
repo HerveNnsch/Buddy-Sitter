@@ -49,8 +49,10 @@ if (isset($_REQUEST["disponible"])) {
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.php">Accueil</a></li>
-                    <li><a href='profil.php'>Profil</a></li>
+                     <li><a href="index.php">Accueil</a></li>
+                    <li><a href="profil.php">Profil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='disponibilites.php'>Disponibilités</a></li>
                     <li><a href="rechercher.php">Rechercher</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>

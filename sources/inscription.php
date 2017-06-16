@@ -39,12 +39,13 @@ if (isset($_REQUEST["btnsave"])) {
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-              
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href="connexion.php">Connexion</a></li>
-                    </ul>
-        
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="connexion.php">Connexion</a></li>
+                    <li class="active"><a href='inscription.php'>Inscription</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">

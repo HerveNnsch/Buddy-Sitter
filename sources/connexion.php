@@ -38,7 +38,9 @@ if (isset($_REQUEST["btnsave"])) {
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.php">Accueil</a></li>
-                    <li><a href="inscription.php">Inscription</a></li>
+                    <li class="active"><a href="connexion.php">Connexion</a></li>
+                    <li><a href='inscription.php'>Inscription</a></li>
+                    
                 </ul>
 
             </div>

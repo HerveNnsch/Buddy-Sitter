@@ -21,16 +21,18 @@ session_start();
                 <div>
                     <ul class="nav navbar-nav navbar-right">
 
-                        <?php
-                        if (isset($_SESSION["id"])) {
-                            echo "<li><a href='profil.php'>Profil</a></li>";
-                            echo "<li><a href='rechercher.php'>Rechercher</a></li>";
-                            echo "<li><a href='deconnexion.php'>Déconnexion</a></li>";
-                        } else {
-                            echo "<li><a href='connexion.php'>Connexion</a></li>";
-                            echo "<li><a href='inscription.php'>Inscription</a></li>";
-                        }
-                        ?>
+                        <?php if (isset($_SESSION["id"])): ?>
+                            <li class="active"><a href="index.php">Accueil</a></li>
+                            <li><a href="profil.php">Profil</a></li>
+                            <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                            <li><a href='disponibilites.php'>Disponibilités</a></li>
+                            <li><a href="rechercher.php">Rechercher</a></li>
+                            <li><a href='deconnexion.php'>Déconnexion</a></li>
+                        <?php else: ?>
+                            <li class="active"><a href="index.php">Accueil</a></li>
+                            <li><a href='connexion.php'>Connexion</a></li>
+                            <li><a href='inscription.php'>Inscription</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -79,11 +81,11 @@ session_start();
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <p>Une fois inscrit et connecté vous pouvez devenir gardien. Pour cela il vous suffit de dire quand et quelle type d'animal vous
-                    voulez garder.</p>
+                        voulez garder.</p>
                     <p>Pour ajouter ou modifier vos disponibilités en tant que gardien il vous faut aller sur votre profil et cliquer soit sur le lien en haut 
-                    écrit "Disponibilités" soit cliquer sur le lien "Modifier" sous le tableau des disponibilités.</p>
+                        écrit "Disponibilités" soit cliquer sur le lien "Modifier" sous le tableau des disponibilités.</p>
                     <p>Vous pourrez ensuite cocher les moments de la semaine ou vous êtes libre et les espèces d'animaux que vous êtes d'accord
-                    de garder. </p>
+                        de garder. </p>
                     <p>Ça y est! Vous êtes gardien.</p>
                 </div>
             </div>

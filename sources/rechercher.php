@@ -38,14 +38,16 @@ $horaires = recupererHoraires();
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-            
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href='deconnexion.php'>Déconnexion</a></li>
-                    </ul>
-           
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="profil.php">Profil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='disponibilites.php'>Disponibilités</a></li>
+                    <li class="active"><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">

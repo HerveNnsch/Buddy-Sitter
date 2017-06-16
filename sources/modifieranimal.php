@@ -7,15 +7,15 @@ But: Permet de modifier un animal d'un utilisateur
 session_start();
 require './dao.php';
 
-if(!isset($_SESSION["id"])){
-     header('Location:index.php');
-     exit();
+if (!isset($_SESSION["id"])) {
+    header('Location:index.php');
+    exit();
 }
 
 $animal = recupererAnimal($_GET["id"]);
 $lesraces = recupererEspeces();
 
-if(isset($_REQUEST["btnsave"])){
+if (isset($_REQUEST["btnsave"])) {
     modifierAnimal($_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_REQUEST["race"], $_GET["id"]);
     header('Location:profil.php');
 }
@@ -32,13 +32,16 @@ if(isset($_REQUEST["btnsave"])){
         <nav class="navbar navbar-default navbar-custom" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
-       
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href="deconnexion.php">Déconnexion</a></li>
-                    </ul>
-    
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li class="active"><a href="profil.php">Profil</a></li>
+                    <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
+                    <li><a href='disponibilites.php'>Disponibilités</a></li>
+                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href='deconnexion.php'>Déconnexion</a></li>
+                </ul>
+
             </div>
         </nav>
         <div class="row">
@@ -51,11 +54,11 @@ if(isset($_REQUEST["btnsave"])){
                             <div class="col-lg-10"><select name="race">
                                     <?php
                                     foreach ($lesraces as $race) {
-                                        $selected="";
-                                        if($race["idEspece"]==$animal[0]["idEspece"]){
-                                            $selected="selected";
+                                        $selected = "";
+                                        if ($race["idEspece"] == $animal[0]["idEspece"]) {
+                                            $selected = "selected";
                                         }
-                                        echo "<option value=" . $race["idEspece"] . " ".$selected.">" . $race["NomEspece"] . "</option>";
+                                        echo "<option value=" . $race["idEspece"] . " " . $selected . ">" . $race["NomEspece"] . "</option>";
                                     }
                                     ?>
                                 </select>
