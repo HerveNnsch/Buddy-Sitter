@@ -72,7 +72,7 @@ $horaires = recupererHoraires();
                         </div>
                         <div class="row">
                             <div class="col-lg-2"><label>Distance maximum (en km):</label></div>
-                            <div class="col-lg-10"><input type="number" name="distance" required="" min="1" max="200" value="10"></div>
+                            <div class="col-lg-10"><input type="number" name="distance" required="" min="1" max="200" value="20"></div>
                         </div>
                         <input class="btn btn-success btn-lg" type="submit" value="Rechercher" name="btnsave" >
                     </fieldset>

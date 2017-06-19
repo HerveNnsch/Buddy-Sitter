@@ -2,6 +2,7 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Page d'accueil du site
+Date: 19.06.2017
 -->
 <?php
 session_start();
@@ -20,7 +21,7 @@ session_start();
                 <a class="navbar-brand" href="index.php">Buddy-Sitter</a>
                 <div>
                     <ul class="nav navbar-nav navbar-right">
-
+                        <!-- Barre de navigation-->
                         <?php if (isset($_SESSION["id"])): ?>
                             <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="profil.php">Profil</a></li>

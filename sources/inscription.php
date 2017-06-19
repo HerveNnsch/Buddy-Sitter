@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <!--
- Auteur: Hervé Neuenschwander
+Auteur: Hervé Neuenschwander
 But: permet de s'inscrire sur le site
+Date: 19.06.2017
 -->
 <?php
 session_start();
 require './dao.php';
 $erreur = "";
+//traitement du formulaire
 if (isset($_REQUEST["btnsave"])) {
+    //récupération des coordonnées
     $rue = str_replace(' ', '+', $_REQUEST["rue"]);
     $curl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $_REQUEST["numero"] . ",+" . $rue . ",+" . $_REQUEST["codepostal"] . ",+" . $_REQUEST["pays"] . "&key=AIzaSyDdezmXoTVAy5mzdrq1qWmpErIj9kuCkH4";
     $getCoordonée = curl_init($curl);
     curl_setopt($getCoordonée, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($getCoordonée, CURLOPT_SSL_VERIFYPEER, false);
     $info = json_decode(curl_exec($getCoordonée), true);
+    //si aucune coordonnées n'est retournée
     if ($info["status"] == "ZERO_RESULTS") {
         $erreur = "L'adresse est introuvable";
     } else {
         $lat = $info["results"][0]["geometry"]["location"]["lat"];
         $lng = $info["results"][0]["geometry"]["location"]["lng"];
+        //si les mots de passe sont les mêmes
         if ($_REQUEST["pwd"] == $_REQUEST["pwd2"]) {
+            //insertion dans la BD
             inscriptionUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"]
                     , $_REQUEST["pays"], $_REQUEST["rue"], $_REQUEST["numero"], $_REQUEST["codepostal"], $lat, $lng, $_REQUEST["mail"]);
             $utilisateur = connexion(sha1($_REQUEST["pwd2"]), $_REQUEST["nom"]);

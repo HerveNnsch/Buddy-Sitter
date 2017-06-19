@@ -2,11 +2,12 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Permet de modifier les informations personnelles d'un utilisateur
+Date: 19.06.2017
 -->
 <?php
 session_start();
 require './dao.php';
-
+//redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
@@ -19,8 +20,10 @@ if (isset($_GET["erreur"])) {
 }
 
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
+//traitment du formulaire
 if (isset($_REQUEST["btnsave"])) {
     if ($_REQUEST["pwd"] == $_REQUEST["pwd2"]) {
+        //insertion dans la BD
         modifierUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd"]), $_REQUEST["date"], $_REQUEST["desc"], $_SESSION["id"], $_REQUEST["mail"]);
         header('Location: profil.php');
     } else {

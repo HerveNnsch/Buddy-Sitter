@@ -12,12 +12,13 @@ Version 1.0 Date: 15.06.2017
 session_start();
 require './dao.php';
 require './phptohtml.php';
-
+//redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
 }
 
+//récupératin des informations nécessaires pour l'affichage de la page
 $utilisateur = recupererUtilisateur($_SESSION["id"]);
 $adresse = recupererAdresse($utilisateur[0]["idAdresse"]);
 $especes = recupererEspeces();
@@ -53,12 +54,15 @@ $eGardable = recupererEspeceGardable($_SESSION["id"]);
             </div>
             <div class="col-lg-10 col-lg-offset-2">
                 <h2>Informations personnels</h2>
+                <!-- Affichage des informations personnelles et de l'adresse -->
                 <?php afficherUtilisateur($utilisateur) ?>
                 <?php afficherAdresse($adresse) ?>
                 <br/>
                 <h2>Mes animaux</h2>
+                <!-- Affichage des animaux -->
                 <?php afficherAnimaux($animaux, $especes) ?>
                 <h2>Mes disponibilités</h2>
+                <!-- Affichage des disponibilités -->
                 <?php afficherDisponibilites($disponibilites, recupererHoraires(), false); ?>
                 Vous gardez les :
                 <?php

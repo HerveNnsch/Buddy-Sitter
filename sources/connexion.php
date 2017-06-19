@@ -2,6 +2,7 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: permet de se connecter
+Date: 19.06.2017
 -->
 <?php
 session_start();

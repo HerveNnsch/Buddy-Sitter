@@ -2,12 +2,14 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: permet à un utilisateur d'insérer ses disponibilités
+Date: 19.06.2017
 -->
 <?php
 session_start();
 require './dao.php';
 require './phptohtml.php';
 
+//redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION["id"])) {
     header('Location: index.php');
     exit();
@@ -18,9 +20,11 @@ $horaires = recupererHoraires();
 $disponibilites = recupererDisponibilites($_SESSION["id"]);
 $racesGardables = recupererEspeceGardable($_SESSION["id"]);
 
+//traitement du formulaire
 if (isset($_REQUEST["btnsave"])) {
     deleteDisponibilites($_SESSION["id"]);
     supprimerChoixRaces($_SESSION["id"]);
+    //si des moment et des espèces ont été choisis
     if (isset($_POST["espece"]) and isset($_POST["disponible"])) {
         foreach ($_POST["disponible"] as $dispo) {
             insererDisponibilites($dispo, $_SESSION["id"]);
@@ -30,9 +34,11 @@ if (isset($_REQUEST["btnsave"])) {
         }
         header('Location: profil.php');
         exit();
+        //si rien n'a été coché
     } else if (!(isset($_POST["espece"])) and ! (isset($_POST["disponible"]))) {
         header('Location: profil.php');
         exit();
+        //si uniquement des horaires ou des espèces ont été choisis
     } else {
         if (!isset($_POST["espece"])) {
             $erreur = "Vous n'avez sélectionner aucune espèce";

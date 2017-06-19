@@ -2,28 +2,32 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Permet de modifier l'adresse d'un utilisateur
+Date: 19.06.2017
 -->
 <?php
 session_start();
 require './dao.php';
-
+//redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
 }
 $erreur ="";
 $adresse = recupererAdresse($_GET["idAdresse"]);
+//traitement du formulaire
 if (isset($_REQUEST["btnsave"])) {
+    //récuperation des coordonnées
     $rue = str_replace(' ', '+', $_REQUEST["rue"]);
     $curl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $_REQUEST["numero"] . ",+" . $rue . ",+" . $_REQUEST["codepostal"] . ",+" . $_REQUEST["pays"] . "&key=AIzaSyDdezmXoTVAy5mzdrq1qWmpErIj9kuCkH4";
     $getCoordonée = curl_init($curl);
     curl_setopt($getCoordonée, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($getCoordonée, CURLOPT_SSL_VERIFYPEER, false);
     $info = json_decode(curl_exec($getCoordonée), true);
+    //su aucune coordonnées n'est retourné
     if ($info["status"] == "ZERO_RESULTS") {
         $erreur = "Adresse introuvable";
     } else {
-
+//insertiondans la BD
         $lat = $info["results"][0]["geometry"]["location"]["lat"];
         $lng = $info["results"][0]["geometry"]["location"]["lng"];
         modifierAdresse($_REQUEST["numero"], $_REQUEST["rue"], $_REQUEST["codepostal"], $_REQUEST["pays"], $lat, $lng, $_GET["idAdresse"]);

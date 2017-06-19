@@ -16,10 +16,7 @@
  * et les fonctions du CRUD
  */
 
-DEFINE('DB_USER', 'Admin');
-DEFINE('DB_PASSWORD', 'Super');
-DEFINE('DB_HOST', '127.0.0.1');
-DEFINE('DB_NAME', 'buddysitter');
+require './configuration.php';
 
 function maConnexion() {
 
@@ -268,7 +265,7 @@ function insererChoixRace($idEspece, $idUtilisateur) {
 
 /**
  * recupère les disponibilités d'un utilisateur
- * @param int $id id de l'utilisateur
+ * @param int $idUtilisateur id de l'utilisateur
  * @return array tableau associatif
  */
 function recupererDisponibilites($idUtilisateur) {
@@ -287,7 +284,7 @@ function recupererDisponibilites($idUtilisateur) {
  * @param string $pays nom du pays
  * @param int $lat la latitude
  * @param int $lng la longitude
- * @param int $id l'id de l'adresse à modifier
+ * @param int $idAdresse l'id de l'adresse à modifier
  */
 function modifierAdresse($numero, $rue, $npa, $pays, $lat, $lng, $idAdresse) {
     $psuAdresse = maConnexion()->prepare("UPDATE adresses "
@@ -310,7 +307,7 @@ function modifierAdresse($numero, $rue, $npa, $pays, $lat, $lng, $idAdresse) {
  * @param string $mdp mot de passe en sha1
  * @param date $naissance date de naissance
  * @param string $description description d el'utilisateur
- * @param int $idUtlisateur id de l'utilisateur à modifier
+ * @param int $idUtilisateur id de l'utilisateur à modifier
  * @param string $email adresse email de l'utilisateur
  */
 function modifierUtilisateur($nom, $prenom, $mdp, $naissance, $description, $idUtilisateur, $email) {

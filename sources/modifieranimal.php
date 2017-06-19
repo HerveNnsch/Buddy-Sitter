@@ -2,11 +2,12 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: Permet de modifier un animal d'un utilisateur
+Date: 19.06.2017
 -->
 <?php
 session_start();
 require './dao.php';
-
+//redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
@@ -14,7 +15,7 @@ if (!isset($_SESSION["id"])) {
 
 $animal = recupererAnimal($_GET["id"]);
 $lesraces = recupererEspeces();
-
+//traitement du formulaire
 if (isset($_REQUEST["btnsave"])) {
     modifierAnimal($_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_REQUEST["race"], $_GET["id"]);
     header('Location:profil.php');
@@ -53,6 +54,7 @@ if (isset($_REQUEST["btnsave"])) {
                             <div class="col-lg-2"><label>Espèce :</label></div>
                             <div class="col-lg-10"><select name="race">
                                     <?php
+                                    //affichage de la liste déroulante
                                     foreach ($lesraces as $race) {
                                         $selected = "";
                                         if ($race["idEspece"] == $animal[0]["idEspece"]) {

@@ -2,6 +2,7 @@
 <!--
 Auteur: Hervé Neuenschwander
 But: permet d'ajouter un animal
+Date: 19.06.2017
 -->
 <?php
 session_start();
@@ -16,12 +17,6 @@ $lesraces = recupererEspeces ();
 if (isset($_REQUEST["btnsave"])) {
     $animal = inscriptionAnimal($_REQUEST["races"], $_REQUEST["nom"], $_REQUEST["date"], $_REQUEST["remarques"], $_SESSION["id"]);
     header('Location:profil.php');
-    /*if (count($animal) > 0) {
-        
-        exit();
-    } else {
-        echo "problème pendant l'insertion";
-    }*/
 }
 ?>
 <html>
@@ -76,7 +71,7 @@ if (isset($_REQUEST["btnsave"])) {
                         </div>
                         <div class="row">
                             <div class="col-lg-2"><label>Remaques :</label></div>
-                            <div class="col-lg-10"><input type="text" name="remarques" required=""></div>
+                            <div class="col-lg-10"><textarea  name="remarques" rows="5" cols="50"></textarea></div>
                         </div>
                         <input class="btn btn-success btn-lg" type="submit" value="Ajouter" name="btnsave" >
                     </fieldset>
