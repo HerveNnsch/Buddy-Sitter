@@ -11,7 +11,7 @@ if (!isset($_SESSION["id"])) {
     header('Location:index.php');
     exit();
 }
-
+$erreur ="";
 $adresse = recupererAdresse($_GET["idAdresse"]);
 if (isset($_REQUEST["btnsave"])) {
     $rue = str_replace(' ', '+', $_REQUEST["rue"]);
@@ -20,10 +20,15 @@ if (isset($_REQUEST["btnsave"])) {
     curl_setopt($getCoordonée, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($getCoordonée, CURLOPT_SSL_VERIFYPEER, false);
     $info = json_decode(curl_exec($getCoordonée), true);
-    $lat = $info["results"][0]["geometry"]["location"]["lat"];
-    $lng = $info["results"][0]["geometry"]["location"]["lng"];
-    modifierAdresse($_REQUEST["numero"], $_REQUEST["rue"], $_REQUEST["codepostal"], $_REQUEST["pays"], $lat, $lng, $_GET["idAdresse"]);
-    header('Location: profil.php');
+    if ($info["status"] == "ZERO_RESULTS") {
+        $erreur = "Adresse introuvable";
+    } else {
+
+        $lat = $info["results"][0]["geometry"]["location"]["lat"];
+        $lng = $info["results"][0]["geometry"]["location"]["lng"];
+        modifierAdresse($_REQUEST["numero"], $_REQUEST["rue"], $_REQUEST["codepostal"], $_REQUEST["pays"], $lat, $lng, $_GET["idAdresse"]);
+        header('Location: profil.php');
+    }
 }
 ?>
 <html>
@@ -44,7 +49,7 @@ if (isset($_REQUEST["btnsave"])) {
                     <li class="active"><a href="profil.php">Profil</a></li>
                     <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                     <li><a href='disponibilites.php'>Disponibilités</a></li>
-                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href="rechercher.php">Rechercher un gardien</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>
 
@@ -55,6 +60,9 @@ if (isset($_REQUEST["btnsave"])) {
                 <form action="modifieradresse.php?idAdresse=<?= $_GET["idAdresse"] ?>" method="POST">
                     <fieldset>
                         <legend>Modification d'adresse</legend>
+                        <div class="row">
+                            <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-2"><label>Pays :</label></div>
                             <div class="col-lg-10"><input type="text" name="pays" required="" value="<?= $adresse[0]["Pays"] ?>"></div>

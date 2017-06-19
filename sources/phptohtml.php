@@ -31,8 +31,8 @@ function afficherUtilisateur($infos) {
         <legend>Informations personnelles</legend>
         <label>Nom: <?= $infos[0]["Nom"] ?></label><br/>
         <label>Prénom: <?= $infos[0]["Prenom"] ?></label><br/>
-        <?php $date = explode("-", $infos[0]["DateNaissance"]);?>
-        <label>Date de naissance: <?= $date[2]." / ".$date[1]." / ".$date[0]; ?></label><br/>
+        <?php $date = explode("-", $infos[0]["DateNaissance"]); ?>
+        <label>Date de naissance: <?= $date[2] . " / " . $date[1] . " / " . $date[0]; ?></label><br/>
         <label>Email: <?= $infos[0]["Email"] ?></label><br/>
         <label>Description: <?= $infos[0]["Description"] ?></label><br/>
         <a href='modifierinformations.php'>Modifier</a>
@@ -72,17 +72,18 @@ function afficherAnimaux($infos, $especes) {
             <th>Remarques</th>
             <th>Modifier</th>
         </tr>
-    <?php foreach ($infos as $animal) : ?>
+        <?php foreach ($infos as $animal) : ?>
             <tr>
                 <td><?= $animal["NomAnimal"] ?></td>
                 <td><?= $especes[$animal["idEspece"] - 1]["NomEspece"] ?></td>
-                <?php $date =  explode("-", $animal["DateNaissanceAnimal"]) ?>
-                <td><?= $date[2]." / ".$date[1]." / ".$date[0]; ?></td>
+                <?php $date = explode("-", $animal["DateNaissanceAnimal"]) ?>
+                <td><?= $date[2] . " / " . $date[1] . " / " . $date[0]; ?></td>
                 <td><?= $animal["Remarques"] ?></td>
                 <td><a href='modifieranimal.php?id=<?= $animal["idAnimal"] ?>'>Modifier</a></td>
             </tr>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
     </table>
+    <a href="ajoutanimal.php">Ajouter un animal</a>
     <?php
 }
 
@@ -99,24 +100,26 @@ function afficherEspeces($infos, $especes) {
     ?>
     <label>Espèces:</label><br/>
     <?php foreach ($infos as $animal) : ?>
-        <input type='checkbox' name='espece[]' value='<?= $animal["idEspece"] ?>'<?php if (in_array($animal["idEspece"], $gardable)) {
+        <input type='checkbox' name='espece[]' value='<?= $animal["idEspece"] ?>'<?php
+        if (in_array($animal["idEspece"], $gardable)) {
             echo "checked";
-        } ?>><?= $animal["NomEspece"] ?><br/>
-        <?php
-    endforeach;
-}
+        }
+        ?>><?= $animal["NomEspece"] ?><br/>
+               <?php
+           endforeach;
+       }
 
-/**
- * Affiche un select avec les animaux d'un utilisateur
- * @param array $infos tablaeu des animaux d'un utilisateur
- */
-function afficherAnimauxSelect($infos) {
-    ?>
+       /**
+        * Affiche un select avec les animaux d'un utilisateur
+        * @param array $infos tablaeu des animaux d'un utilisateur
+        */
+       function afficherAnimauxSelect($infos) {
+           ?>
     <select name="animal"><?php
-    foreach ($infos as $animal) {
-        echo "<option value=" . $animal["idAnimal"] . ">" . $animal["NomAnimal"] . "</option>";
-    }
-    ?></select>
+        foreach ($infos as $animal) {
+            echo "<option value=" . $animal["idAnimal"] . ">" . $animal["NomAnimal"] . "</option>";
+        }
+        ?></select>
     <?php
 }
 
@@ -143,14 +146,18 @@ function afficherDisponibilites($disponible, $horaires, $modif) {
             <th>Dimanche</th>
         </tr>
         <tr>
-            <?php for ($i = 0; $i < count($horaires); $i+=3): ?>
+                <?php for ($i = 0; $i < count($horaires); $i += 3): ?>
                 <td>
-        <?php for ($j = $i; $j < $i + 3; $j++): ?>
-                        <input class="dispos" type="checkbox" name="disponible[]" onclick="<?php if (!$modif) {
-                echo "return false";
-            } ?>" value="<?= $horaires[$j]["idHoraire"] ?>" <?php if (in_array($horaires[$j]["idHoraire"], $idHoraire)) {
-                echo"checked";
-            } ?> > <?= $horaires[$j]["Periode"] ?> <br/>
+                           <?php for ($j = $i; $j < $i + 3; $j++): ?>
+                        <input class="dispos" type="checkbox" name="disponible[]" onclick="<?php
+                               if (!$modif) {
+                                   echo "return false";
+                               }
+                               ?>" value="<?= $horaires[$j]["idHoraire"] ?>" <?php
+                    if (in_array($horaires[$j]["idHoraire"], $idHoraire)) {
+                        echo"checked";
+                    }
+                    ?> > <?= $horaires[$j]["Periode"] ?> <br/>
         <?php endfor; ?>
                 </td>
     <?php endfor; ?>
@@ -167,14 +174,14 @@ function afficherDisponibilites($disponible, $horaires, $modif) {
 function afficherGardien($infos, $adresse) {
     ?>
     <fieldset>
-        <legend><h4><?= $infos[0]["Prenom"]." ". $infos[0]["Nom"] ?></h4></legend>
+        <legend><h4><?= $infos[0]["Prenom"] . " " . $infos[0]["Nom"] ?></h4></legend>
         <label>Adresse :</label>
-        <p><?= $adresse[0]["NomRue"]." ". $adresse[0]["Numero"] ?> </p>
+        <p><?= $adresse[0]["NomRue"] . " " . $adresse[0]["Numero"] ?> </p>
         <label>Adresse Email :</label>
         <p><?= $infos[0]["Email"] ?></p>
         <label>Description :</label>
         <p> <?= $infos[0]["Description"] ?></p>
     </fieldset>
-        <br/>
+    <br/>
     <?php
 }

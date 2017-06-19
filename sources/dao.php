@@ -369,7 +369,7 @@ function recupererEspeceGardable($idUtilisateur) {
  * @param int $distance la distance maximale
  * @return array retourne un tableau contenant les gardiens disponibles
  */
-function rechercherGardien($dispos, $idEspece, $lat, $lng, $distance) {
+function rechercherGardien($dispos, $idEspece, $lat, $lng, $distance, $idUtilisateur) {
     //le tableau des dispos est transformé en string pour être insérer dans la requête.
     $ids = implode(",", $dispos);
     str_replace('"', '', $ids);
@@ -378,10 +378,12 @@ function rechercherGardien($dispos, $idEspece, $lat, $lng, $distance) {
                 . "WHERE idHoraire IN (" . $ids . ") "
                 . "AND idEspece = :idEspece "
                 . "AND (DEGREES(Acos(sin(radians(:lat))*sin(radians(lat))+cos(radians(:lat))*cos(radians(lat))*cos(radians(:lng-lng)))))*110.544 < :distance "
+                . "AND idUtilisateur != :idutilisateur "
                 . "GROUP BY idUtilisateur");
         $pssEspeces->bindParam(':idEspece', $idEspece);
         $pssEspeces->bindParam(':lat', $lat);
         $pssEspeces->bindParam(':lng', $lng);
+        $pssEspeces->bindParam(':idutilisateur', $idUtilisateur);
         $pssEspeces->bindParam(':distance', $distance);
         $pssEspeces->execute();
         return $pssEspeces->fetchAll(PDO::FETCH_ASSOC);

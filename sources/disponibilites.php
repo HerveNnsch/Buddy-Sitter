@@ -12,6 +12,7 @@ if (!isset($_SESSION["id"])) {
     header('Location: index.php');
     exit();
 }
+$erreur = "";
 $races = recupererEspeces();
 $horaires = recupererHoraires();
 $disponibilites = recupererDisponibilites($_SESSION["id"]);
@@ -19,19 +20,27 @@ $racesGardables = recupererEspeceGardable($_SESSION["id"]);
 
 if (isset($_REQUEST["btnsave"])) {
     deleteDisponibilites($_SESSION["id"]);
-    if (count($_POST["disponible"]) > 0) {
+    supprimerChoixRaces($_SESSION["id"]);
+    if (isset($_POST["espece"]) and isset($_POST["disponible"])) {
         foreach ($_POST["disponible"] as $dispo) {
             insererDisponibilites($dispo, $_SESSION["id"]);
         }
-    }
-    supprimerChoixRaces($_SESSION["id"]);
-    if (count($_POST["espece"]) > 0) {
         foreach ($_POST["espece"] as $espece) {
             insererChoixRace($espece, $_SESSION["id"]);
         }
+        header('Location: profil.php');
+        exit();
+    } else if (!(isset($_POST["espece"])) and ! (isset($_POST["disponible"]))) {
+        header('Location: profil.php');
+        exit();
+    } else {
+        if (!isset($_POST["espece"])) {
+            $erreur = "Vous n'avez sélectionner aucune espèce";
+        }
+        if (!isset($_POST["disponible"])) {
+            $erreur = "Vous n'avez sélectionner aucun moment de la semaine";
+        }
     }
-    header('Location: profil.php');
-    exit();
 }
 ?>
 <html>
@@ -52,7 +61,7 @@ if (isset($_REQUEST["btnsave"])) {
                     <li><a href="profil.php">Profil</a></li>
                     <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                     <li class="active"><a href='disponibilites.php'>Disponibilités</a></li>
-                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href="rechercher.php">Rechercher un gardien</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>
 
@@ -65,8 +74,11 @@ if (isset($_REQUEST["btnsave"])) {
             <div class="col-lg-10 col-lg-offset-2">
                 <form action="disponibilites.php" method="POST">
                     <fieldset>
-                        <legend>Ajouter des disponibilités</legend>
-<?php afficherDisponibilites($disponibilites, $horaires, true); ?>
+                        <div class="row">
+                            <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
+                        </div>
+                        <legend>Vos disponibilités en tant que gardien</legend>
+                        <?php afficherDisponibilites($disponibilites, $horaires, true); ?>
                         <br/><?php afficherEspeces($races, $racesGardables); ?>
                     </fieldset>
                     <input class="btn btn-success btn-lg" type="submit" value="Enregistrer" name="btnsave" >

@@ -44,7 +44,7 @@ $horaires = recupererHoraires();
                     <li><a href="profil.php">Profil</a></li>
                     <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                     <li><a href='disponibilites.php'>Disponibilités</a></li>
-                    <li class="active"><a href="rechercher.php">Rechercher</a></li>
+                    <li class="active"><a href="rechercher.php">Rechercher un gardien</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>
 
@@ -59,7 +59,7 @@ $horaires = recupererHoraires();
                             <div class="col-lg-12"><label style="color: red"><?= $erreur ?></label></div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2"><label>Animal :</label></div>
+                            <div class="col-lg-2"><label>Votre animal :</label></div>
                             <div class="col-lg-10"><?php afficherAnimauxSelect($animaux); ?></div>
                         </div>
                         <div class="row">
@@ -71,7 +71,7 @@ $horaires = recupererHoraires();
                             <div class="col-lg-10"><?php afficherDisponibilites([], $horaires, true) ?></div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2"><label>Distance maximum :</label></div>
+                            <div class="col-lg-2"><label>Distance maximum (en km):</label></div>
                             <div class="col-lg-10"><input type="number" name="distance" required="" min="1" max="200" value="10"></div>
                         </div>
                         <input class="btn btn-success btn-lg" type="submit" value="Rechercher" name="btnsave" >

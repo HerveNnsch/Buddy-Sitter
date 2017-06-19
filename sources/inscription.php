@@ -14,16 +14,20 @@ if (isset($_REQUEST["btnsave"])) {
     curl_setopt($getCoordonée, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($getCoordonée, CURLOPT_SSL_VERIFYPEER, false);
     $info = json_decode(curl_exec($getCoordonée), true);
-    $lat = $info["results"][0]["geometry"]["location"]["lat"];
-    $lng = $info["results"][0]["geometry"]["location"]["lng"];
-    if ($_REQUEST["pwd"] == $_REQUEST["pwd2"]) {
-        inscriptionUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"]
-                , $_REQUEST["pays"], $_REQUEST["rue"], $_REQUEST["numero"], $_REQUEST["codepostal"], $lat, $lng, $_REQUEST["mail"]);
-        $utilisateur = connexion(sha1($_REQUEST["pwd2"]), $_REQUEST["nom"]);
-        $_SESSION["id"] = $utilisateur[0]["idUtilisateur"];
-        header('Location: index.php');
+    if ($info["status"] == "ZERO_RESULTS") {
+        $erreur = "L'adresse est introuvable";
     } else {
-        $erreur = "Les deux mots de passe ne correspondent pas";
+        $lat = $info["results"][0]["geometry"]["location"]["lat"];
+        $lng = $info["results"][0]["geometry"]["location"]["lng"];
+        if ($_REQUEST["pwd"] == $_REQUEST["pwd2"]) {
+            inscriptionUtilisateur($_REQUEST["nom"], $_REQUEST["prenom"], sha1($_REQUEST["pwd2"]), $_REQUEST["date"], $_REQUEST["desc"]
+                    , $_REQUEST["pays"], $_REQUEST["rue"], $_REQUEST["numero"], $_REQUEST["codepostal"], $lat, $lng, $_REQUEST["mail"]);
+            $utilisateur = connexion(sha1($_REQUEST["pwd2"]), $_REQUEST["nom"]);
+            $_SESSION["id"] = $utilisateur[0]["idUtilisateur"];
+            header('Location: index.php');
+        } else {
+            $erreur = "Les deux mots de passe ne correspondent pas";
+        }
     }
 }
 ?> 

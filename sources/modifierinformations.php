@@ -46,7 +46,7 @@ if (isset($_REQUEST["btnsave"])) {
                     <li class="active"><a href="profil.php">Profil</a></li>
                     <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                     <li><a href='disponibilites.php'>Disponibilités</a></li>
-                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href="rechercher.php">Rechercher un gardien</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>
 

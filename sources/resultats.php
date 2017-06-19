@@ -23,7 +23,7 @@ if (!isset($_SESSION["id"])) {
 if (isset($_REQUEST["disponible"])) {
     $animal = recupererAnimal($_REQUEST["animal"]);
     $adresse = recupererAdresseDeUtilisateur($_SESSION["id"]);
-    $resultats = rechercherGardien($_REQUEST["disponible"], $animal[0]["idEspece"], $adresse[0]["Lat"], $adresse[0]["Lng"], $_REQUEST["distance"]);
+    $resultats = rechercherGardien($_REQUEST["disponible"], $animal[0]["idEspece"], $adresse[0]["Lat"], $adresse[0]["Lng"], $_REQUEST["distance"],$_SESSION["id"]);
     //si aucun gardien n'a été trouvé on redirige vers la page de recherche avec l'erreur n° 2
     if (count($resultats) < 1) {
         header('Location:rechercher.php?erreur=2');
@@ -53,7 +53,7 @@ if (isset($_REQUEST["disponible"])) {
                     <li><a href="profil.php">Profil</a></li>
                     <li><a href='ajoutanimal.php'>Ajouter un animal</a></li>
                     <li><a href='disponibilites.php'>Disponibilités</a></li>
-                    <li><a href="rechercher.php">Rechercher</a></li>
+                    <li><a href="rechercher.php">Rechercher un gardien</a></li>
                     <li><a href='deconnexion.php'>Déconnexion</a></li>
                 </ul>
 
